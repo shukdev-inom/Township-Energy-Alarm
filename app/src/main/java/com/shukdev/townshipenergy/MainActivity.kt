@@ -270,6 +270,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        // Opening the app silences a voice alert that is still speaking.
+        stopService(android.content.Intent(this, SpeakService::class.java))
         handler.post(ticker)
     }
 
