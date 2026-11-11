@@ -28,12 +28,12 @@ object Notifier {
         }
     }
 
-    fun build(c: Context, autoCancel: Boolean): NotificationCompat.Builder {
+    fun build(c: Context, autoCancel: Boolean, withStop: Boolean = false): NotificationCompat.Builder {
         val open = PendingIntent.getActivity(
             c, 3, Intent(c, MainActivity::class.java),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        return NotificationCompat.Builder(c, CHANNEL)
+        val b = NotificationCompat.Builder(c, CHANNEL)
             .setSmallIcon(R.drawable.ic_notif)
             .setContentTitle("Energy refilled")
             .setContentText(MESSAGE)
@@ -42,6 +42,15 @@ object Notifier {
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setContentIntent(open)
             .setAutoCancel(autoCancel)
+        if (withStop) {
+            val stop = PendingIntent.getService(
+                c, 4,
+                Intent(c, SpeakService::class.java).setAction(SpeakService.ACTION_STOP),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            b.addAction(R.drawable.ic_notif, "Stop", stop)
+        }
+        return b
     }
 
     /** Normal, dismissible notification that stays after the voice finishes. */
