@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.App" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/btn_green</item>
+        <item name="android:fontFamily">@font/lilita_one</item>
+        <item name="fontFamily">@font/lilita_one</item>
+        <item name="android:statusBarColor">@color/grass_dark</item>
+        <item name="android:navigationBarColor">@color/grass_dark</item>
+        <item name="android:windowBackground">@color/grass</item>
+    </style>
+</resources>

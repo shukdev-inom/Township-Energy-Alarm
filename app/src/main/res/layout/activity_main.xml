@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_grass"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <!-- Top HUD -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvPct"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="@drawable/bg_coin"
+                android:gravity="center"
+                android:text="0%"
+                android:textColor="@color/wood_dark"
+                android:textSize="12sp" />
+
+            <ProgressBar
+                android:id="@+id/xpBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="80dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="4dp"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/bar_progress" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_pill"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="2dp"
+                android:paddingEnd="6dp">
+
+                <FrameLayout
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/bg_coin">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_bolt_brown" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvHudEnergy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:text="--/100"
+                    android:textColor="@color/cream"
+                    android:textSize="17sp" />
+
+                <ImageView
+                    android:id="@+id/hudPlus"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/bg_circle_green"
+                    android:clickable="true"
+                    android:contentDescription="Add 5 energy"
+                    android:focusable="true"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_plus_white" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Dialog panel -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_panel"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingTop="34dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="16dp">
+
+                <FrameLayout
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
+                    android:layout_gravity="center_horizontal">
+
+                    <com.shukdev.townshipenergy.EnergyRingView
+                        android:id="@+id/ring"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="No timer"
+                            android:textColor="@color/wood_dark"
+                            android:textSize="15sp" />
+
+                        <com.shukdev.townshipenergy.OutlinedTextView
+                            android:id="@+id/tvCountdown"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="4dp"
+                            android:paddingEnd="4dp"
+                            android:text="--:--:--"
+                            android:textColor="@color/cream"
+                            android:textSize="30sp"
+                            app:otvColor="@color/wood_dark"
+                            app:otvWidth="5dp" />
+
+                        <TextView
+                            android:id="@+id/tvRingEnergy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_bolt_brown"
+                            android:drawablePadding="2dp"
+                            android:text="-- / 100"
+                            android:textColor="@color/wood_dark"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvFullAt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_plaque"
+                    android:drawableStart="@drawable/ic_clock_brown"
+                    android:drawablePadding="6dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingTop="4dp"
+                    android:paddingRight="14dp"
+                    android:paddingBottom="4dp"
+                    android:text="Set your energy and tap Start"
+                    android:textColor="@color/wood_dark"
+                    android:textSize="14sp" />
+
+                <!-- Energy now -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Energy now"
+                        android:textColor="@color/wood_dark"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/btnCurMinus"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_circle_brown"
+                        android:clickable="true"
+                        android:contentDescription="Less"
+                        android:focusable="true"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_minus_cream" />
+
+                    <EditText
+                        android:id="@+id/etCurrent"
+                        android:layout_width="64dp"
+                        android:layout_height="38dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/bg_input"
+                        android:gravity="center"
+                        android:hint="0"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="2dp"
+                        android:selectAllOnFocus="true"
+                        android:singleLine="true"
+                        android:textColor="@color/wood_dark"
+                        android:textColorHint="@color/field_border"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/btnCurPlus"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_circle_brown"
+                        android:clickable="true"
+                        android:contentDescription="More"
+                        android:focusable="true"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_plus_white" />
+                </LinearLayout>
+
+                <!-- Max energy -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Max energy"
+                        android:textColor="@color/wood_dark"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/btnMaxMinus"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_circle_brown"
+                        android:clickable="true"
+                        android:contentDescription="Less"
+                        android:focusable="true"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_minus_cream" />
+
+                    <EditText
+                        android:id="@+id/etMax"
+                        android:layout_width="64dp"
+                        android:layout_height="38dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/bg_input"
+                        android:gravity="center"
+                        android:hint="100"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="2dp"
+                        android:selectAllOnFocus="true"
+                        android:singleLine="true"
+                        android:textColor="@color/wood_dark"
+                        android:textColorHint="@color/field_border"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/btnMaxPlus"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_circle_brown"
+                        android:clickable="true"
+                        android:contentDescription="More"
+                        android:focusable="true"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_plus_white" />
+                </LinearLayout>
+
+                <!-- Minutes per energy -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Minutes per energy"
+                        android:textColor="@color/wood_dark"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/btnMinMinus"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_circle_brown"
+                        android:clickable="true"
+                        android:contentDescription="Less"
+                        android:focusable="true"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_minus_cream" />
+
+                    <EditText
+                        android:id="@+id/etMinutes"
+                        android:layout_width="64dp"
+                        android:layout_height="38dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/bg_input"
+                        android:gravity="center"
+                        android:hint="3"
+                        android:imeOptions="actionDone"
+                        android:inputType="numberDecimal"
+                        android:maxLength="6"
+                        android:padding="2dp"
+                        android:selectAllOnFocus="true"
+                        android:singleLine="true"
+                        android:textColor="@color/wood_dark"
+                        android:textColorHint="@color/field_border"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/btnMinPlus"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_circle_brown"
+                        android:clickable="true"
+                        android:contentDescription="More"
+                        android:focusable="true"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_plus_white" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:gravity="center"
+                    android:text="Spent energy? Tap to subtract"
+                    android:textColor="@color/wood_dark"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal">
+
+                    <com.shukdev.townshipenergy.OutlinedTextView
+                        android:id="@+id/chip5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_btn_orange"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:text="-5"
+                        android:textColor="@color/white"
+                        android:textSize="17sp"
+                        app:otvColor="@color/btn_orange_dark"
+                        app:otvWidth="3dp" />
+
+                    <com.shukdev.townshipenergy.OutlinedTextView
+                        android:id="@+id/chip10"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_btn_orange"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:text="-10"
+                        android:textColor="@color/white"
+                        android:textSize="17sp"
+                        app:otvColor="@color/btn_orange_dark"
+                        app:otvWidth="3dp" />
+
+                    <com.shukdev.townshipenergy.OutlinedTextView
+                        android:id="@+id/chip15"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_btn_orange"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:text="-15"
+                        android:textColor="@color/white"
+                        android:textSize="17sp"
+                        app:otvColor="@color/btn_orange_dark"
+                        app:otvWidth="3dp" />
+
+                    <com.shukdev.townshipenergy.OutlinedTextView
+                        android:id="@+id/chip20"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_btn_orange"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:text="-20"
+                        android:textColor="@color/white"
+                        android:textSize="17sp"
+                        app:otvColor="@color/btn_orange_dark"
+                        app:otvWidth="3dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.shukdev.townshipenergy.OutlinedTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_horizontal"
+                android:background="@drawable/bg_ribbon"
+                android:paddingLeft="20dp"
+                android:paddingTop="6dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="6dp"
+                android:text="Expedition energy"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:otvColor="@color/teal_dark"
+                app:otvWidth="3dp" />
+
+            <ImageView
+                android:id="@+id/btnClose"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/bg_circle_red"
+                android:clickable="true"
+                android:contentDescription="Close"
+                android:focusable="true"
+                android:padding="8dp"
+                android:src="@drawable/ic_close_white" />
+        </FrameLayout>
+
+        <com.shukdev.townshipenergy.OutlinedTextView
+            android:id="@+id/btnStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_btn_green"
+            android:clickable="true"
+            android:drawableStart="@drawable/ic_play_white"
+            android:drawablePadding="8dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:text="Start timer"
+            android:textColor="@color/white"
+            android:textSize="26sp"
+            app:otvColor="@color/btn_green_dark"
+            app:otvWidth="5dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <com.shukdev.townshipenergy.OutlinedTextView
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_red"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="Cancel"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:otvColor="@color/btn_red_dark"
+                app:otvWidth="3dp" />
+
+            <TextView
+                android:id="@+id/btnTest"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_yellow"
+                android:clickable="true"
+                android:drawableStart="@drawable/ic_volume_brown"
+                android:drawablePadding="6dp"
+                android:focusable="true"
+                android:gravity="center"
+                android:paddingStart="14dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="14dp"
+                android:paddingBottom="8dp"
+                android:text="Test voice"
+                android:textColor="@color/wood_dark"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

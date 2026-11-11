@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="green">#2E9E5B</color>
+    <color name="white">#FFFFFF</color>
+    <color name="ic_launcher_background">#7CC84F</color>
+    <color name="grass">#86D05A</color>
+    <color name="grass_dark">#6CB844</color>
+    <color name="soil">#A9774A</color>
+    <color name="wood_dark">#5A3416</color>
+    <color name="wood">#A8672D</color>
+    <color name="wood_light">#C98A4B</color>
+    <color name="parchment">#FBECCB</color>
+    <color name="parchment_dark">#F1D9A0</color>
+    <color name="cream">#FFF3C9</color>
+    <color name="field">#FFFAF0</color>
+    <color name="field_border">#B07A3F</color>
+    <color name="gold">#F6C431</color>
+    <color name="teal">#2FA4B8</color>
+    <color name="teal_dark">#1B6572</color>
+    <color name="btn_green">#5CC13A</color>
+    <color name="btn_green_dark">#2F6F1B</color>
+    <color name="btn_red">#E5503F</color>
+    <color name="btn_red_dark">#8A2A1F</color>
+    <color name="btn_orange">#F39C32</color>
+    <color name="btn_orange_dark">#9A5A10</color>
+    <color name="xp_blue">#4CC3E8</color>
+</resources>
