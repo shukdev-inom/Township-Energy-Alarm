@@ -15,6 +15,10 @@ import java.util.Locale
 /** Short-lived foreground service: speaks the message twice, posts a notification, stops. */
 class SpeakService : Service(), TextToSpeech.OnInitListener {
 
+    companion object {
+        const val ACTION_STOP = "com.shukdev.townshipenergy.STOP_VOICE"
+    }
+
     private var tts: TextToSpeech? = null
     private var finished = false
     private val handler = Handler(Looper.getMainLooper())
@@ -22,8 +26,12 @@ class SpeakService : Service(), TextToSpeech.OnInitListener {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (intent?.action == ACTION_STOP) {
+            stopNow()
+            return START_NOT_STICKY
+        }
         Notifier.ensureChannel(this)
-        val n = Notifier.build(this, false).build()
+        val n = Notifier.build(this, false, withStop = true).build()
         if (Build.VERSION.SDK_INT >= 29) {
             startForeground(Notifier.ID_SERVICE, n, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
         } else {
@@ -38,12 +46,12 @@ class SpeakService : Service(), TextToSpeech.OnInitListener {
 
     override fun onInit(status: Int) {
         val t = tts
+        if (finished) return
         if (status != TextToSpeech.SUCCESS || t == null) {
             finish()
             return
         }
         t.language = Locale.US
-        // ALARM stream: audible even when media volume is low / phone on vibrate-ish modes.
         t.setAudioAttributes(
             AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_ALARM)
@@ -64,14 +72,24 @@ class SpeakService : Service(), TextToSpeech.OnInitListener {
         t.speak(Notifier.MESSAGE, TextToSpeech.QUEUE_ADD, null, "second")
     }
 
+    /** Voice finished by itself: leave a normal notification behind. */
     private fun finish() {
         if (finished) return
         finished = true
         handler.post {
             Notifier.postDone(this)
-            if (Build.VERSION.SDK_INT >= 24) stopForeground(STOP_FOREGROUND_REMOVE)
+            stopForeground(STOP_FOREGROUND_REMOVE)
             stopSelf()
         }
+    }
+
+    /** User pressed Stop (or opened the app): silence immediately, no extra notification. */
+    private fun stopNow() {
+        finished = true
+        handler.removeCallbacksAndMessages(null)
+        tts?.stop()
+        stopForeground(STOP_FOREGROUND_REMOVE)
+        stopSelf()
     }
 
     override fun onDestroy() {
