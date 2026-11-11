@@ -30,11 +30,19 @@ jobs:
           fi
           echo "dir=$(dirname "$F")" >> "$GITHUB_OUTPUT"
 
-      - name: Build debug APK
+      - name: Decode keystore
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > "$GITHUB_WORKSPACE/release.jks"
+
+      - name: Build signed release APK
         working-directory: ${{ steps.find.outputs.dir }}
+        env:
+          KEYSTORE_FILE: ${{ github.workspace }}/release.jks
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           set -o pipefail
-          gradle assembleDebug --stacktrace --console=plain 2>&1 | tee build.log
+          gradle assembleRelease --stacktrace --console=plain 2>&1 | tee build.log
 
       - name: Show the real error
         if: failure()
@@ -52,4 +60,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: TownshipEnergyAlarm-apk
-          path: ${{ steps.find.outputs.dir }}/app/build/outputs/apk/debug/app-debug.apk
+          path: ${{ steps.find.outputs.dir }}/app/build/outputs/apk/release/app-release.apk
